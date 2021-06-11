@@ -1,4 +1,6 @@
 
+from matplotlib.ticker import NullFormatter
+
 suffixes = {
     1e-9: 'n',
     1e-6: 'u',
