@@ -67,8 +67,8 @@ def fix_borders(ax, visibles=[False, False, True, True], fix_bounds=True):
     min_y, max_y = ax.get_ylim()
 
     # Correct to the actual ticks
-    (x_idxs,) = np.where((xticks > min_x) & (xticks < max_x))
-    (y_idxs,) = np.where((yticks > min_y) & (yticks < max_y))
+    (x_idxs,) = np.where((xticks >= min_x) & (xticks <= max_x))
+    (y_idxs,) = np.where((yticks >= min_y) & (yticks <= max_y))
     xticks = xticks[x_idxs]
     yticks = yticks[y_idxs]
 
