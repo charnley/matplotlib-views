@@ -1,13 +1,14 @@
 import matplotlib
-import matplotlib.patheffects as PathEffects
+from matplotlib import patheffects
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
 
-def get_plot(n_ax=1):
+def get_plot(n_ax=1, sharey=True, sharex=True):
     """ Get a jupyter-sized plot """
-    fig, axs = plt.subplots(1, n_ax, sharey=True, sharex=True, figsize=(12, n_ax * 12))
+    size=12
+    fig, axs = plt.subplots(1, n_ax, sharey=sharey, sharex=sharex, figsize=(n_ax * size, size))
     return fig, axs
 
 
@@ -29,6 +30,32 @@ def set_global_style(font_size=18):
     matplotlib.rcParams['ytick.major.width'] = 2
 
     return
+
+
+def teach_style(font_size=18):
+
+    scale = 1
+    length = 100
+    randomness = 2
+
+    rcParams.update({
+        'font.family': ['xkcd', 'xkcd Script', 'Humor Sans', 'Comic Neue', 'Comic Sans MS'],
+        'font.size': 14.0,
+        'path.sketch': (scale, length, randomness),
+        'path.effects': [patheffects.withStroke(linewidth=4, foreground="w")],
+        'axes.linewidth': 1.5,
+        'lines.linewidth': 2.0,
+        'figure.facecolor': 'white',
+        'grid.linewidth': 0.0,
+        'axes.grid': False,
+        'axes.unicode_minus': False,
+        'axes.edgecolor': 'black',
+        'xtick.major.size': 8,
+        'xtick.major.width': 3,
+        'ytick.major.size': 8,
+        'ytick.major.width': 3,
+    })
+
 
 
 def get_tick_limits(ax):
