@@ -1,4 +1,13 @@
+"""
+Collection of custom tick formatters
 
+for example
+
+ax.xaxis.set_major_formatter(formatter_suffix)
+
+"""
+
+import datetime
 from matplotlib.ticker import NullFormatter
 
 suffixes = {
@@ -28,6 +37,29 @@ def formatter_suffix(x, pos):
     point = fmt.format(x)
 
     return point
+
+
+def formatter_time(seconds, pos):
+    """ Automatically format time in seconds to nearest sec, mins, hours, days, years """
+
+    delta = datetime.timedelta(seconds=seconds)
+
+    days = delta.days
+    seconds = delta.seconds
+    hours = seconds//3600
+    minutes = (seconds//60)%60
+
+    if days > 0:
+        return f"{days}d"
+
+    if hours > 0:
+        return f"{hours}h"
+
+    if minutes > 0:
+        return f"{minutes}m"
+
+    return f"{seconds}s"
+
 
 def formatter_int(x, pos):
     return "%i" % x
