@@ -4,6 +4,7 @@ from matplotlib import pyplot as plt
 import matplotlib
 import numpy as np
 import pandas as pd
+import re
 
 
 def get_plot(n_ax=1, sharey=True, sharex=True):
@@ -124,11 +125,16 @@ def fix_borders(ax, visibles=[False, False, True, True], fix_bounds=True):
     xticks = xticks[x_idxs]
     yticks = yticks[y_idxs]
 
-    min_x = np.min(xticks)
-    max_x = np.max(xticks)
+    xticks = list(xticks)
+    yticks = list(yticks)
 
-    min_y = np.min(yticks)
-    max_y = np.max(yticks)
+    if xticks:
+        min_x = np.min(xticks)
+        max_x = np.max(xticks)
+
+    if yticks:
+        min_y = np.min(yticks)
+        max_y = np.max(yticks)
 
     # TODO Better ax.set_xlim()
 
@@ -144,8 +150,10 @@ def fix_borders(ax, visibles=[False, False, True, True], fix_bounds=True):
             continue
 
         if direction == "left" or direction == "right":
-            spine.set_bounds(min_y, max_y)
+            if yticks:
+                spine.set_bounds(min_y, max_y)
 
         else:
-            spine.set_bounds(min_x, max_x)
+            if xticks:
+                spine.set_bounds(min_x, max_x)
 
