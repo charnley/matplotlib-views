@@ -34,11 +34,13 @@ COLOR_HIGHLIGHT = "#800031"
 
 
 
-def save(filename, fig=plt):
+def save(filename, fig=plt, clf=False):
     fig.savefig(filename, bbox_inches="tight")
     fig.savefig(filename + ".pdf", bbox_inches="tight")
-    fig.clf()
-    return
+    fig.savefig(filename + ".svg", bbox_inches="tight")
+
+    if clf:
+        fig.clf()
 
 
 def get_spines(ax):

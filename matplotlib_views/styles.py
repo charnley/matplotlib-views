@@ -9,10 +9,15 @@ from matplotlib_views import utils, formats
 
 import numpy as np
 
+
+outline = dict(
+    path_effects = [patheffects.withStroke(linewidth=4, foreground="w")],
+)
+
+
 class ppt:
 
     pass
-
 
 
 class teach:
@@ -48,7 +53,7 @@ class teach:
             'font.family': ['xkcd', 'xkcd Script', 'Humor Sans', 'Comic Neue', 'Comic Sans MS'],
             'font.size': font_size,
             'path.sketch': (scale, length, randomness),
-            # 'path.effects': [patheffects.withStroke(linewidth=4, foreground="w")],
+            'path.effects': [],
             'axes.linewidth': 1.5,
             'lines.linewidth': 2.0,
             'figure.facecolor': 'white',
