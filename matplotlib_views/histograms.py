@@ -11,7 +11,12 @@ def two_dimensional_hex(
         colormap="PuRd", bins="log"
 
 ):
-    """ Wrapper for MPL hexbin func with sane defaults """
+    """ Wrapper for MPL hexbin func with sane defaults 
+
+
+    add colorbar:
+    https://stackoverflow.com/questions/40833295/matplotlib-hexbin-add-colour-bar-for-dummies
+    """
 
     # Settings
     lineswidth = 0.0  # white lines
@@ -27,5 +32,6 @@ def two_dimensional_hex(
         "bins": bins,
     }
 
-    _ = ax.hexbin(xvalues, yvalues, **hexbinpar)
+    im = ax.hexbin(xvalues, yvalues, **hexbinpar)
+    return im
 

@@ -9,6 +9,7 @@ ax.xaxis.set_major_formatter(formatter_suffix)
 
 import datetime
 from matplotlib.ticker import NullFormatter
+import matplotlib
 
 suffixes = {
     1e-9: 'n',
@@ -39,7 +40,7 @@ def formatter_suffix(x, pos):
     return point
 
 
-def formatter_time(seconds, pos):
+def formatter_time_float(seconds, pos):
     """ Automatically format time in seconds to nearest sec, mins, hours, days, years """
 
     delta = datetime.timedelta(seconds=seconds)
@@ -54,6 +55,28 @@ def formatter_time(seconds, pos):
 
     if hours > 0:
         return f"{hours}h"
+
+    if minutes > 0:
+        return f"{minutes}m"
+
+    return f"{seconds}s"
+
+
+def formatter_time(seconds, pos):
+    """ Automatically format time in seconds to nearest sec, mins, hours, days, years """
+
+    delta = datetime.timedelta(seconds=seconds)
+
+    days = delta.days
+    seconds = delta.seconds
+    hours = seconds//3600
+    minutes = (seconds//60)%60
+
+    if days > 0:
+        return f"{days}d"
+
+    if hours > 0:
+        return f"{hours}h {minutes}m"
 
     if minutes > 0:
         return f"{minutes}m"
@@ -81,3 +104,13 @@ def formatter_notrail(x, pos):
         return '{0:g}'.format(x)
 
     return
+
+
+# usage
+
+def set_axis_format(axis, format_func):
+    """
+    set ax.xaxis format
+    """
+    # ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(formatter_sci))
+    axis.set_major_formatter(matplotlib.ticker.FuncFormatter(format_func))

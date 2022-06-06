@@ -641,3 +641,54 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+###
+
+fig, ax = viewlib.get_plot()
+
+# Overlap with KDE
+
+# Set histogram
+ax.hist(no_conformers, bins=10, edgecolor='#ffffff')#, color="#2D82B5")
+
+# Set KDE
+ax2 = ax.twinx()
+kde = stats.gaussian_kde(no_conformers)
+kde_xaxis = np.linspace(min(no_conformers), max(no_conformers), 500)
+kde_yaxis = kde(kde_xaxis)
+ax2.plot(kde_xaxis, kde_yaxis, "k-",
+    path_effects = [matplotlib.patheffects.withStroke(linewidth=8, foreground="w"),
+    matplotlib.patheffects.Stroke(linewidth=3, foreground='k')]
+)
+
+ax.set_ylabel("Count")
+ax.set_xlabel("Conformers per SMILES")
+
+
+ax.set_ylim(-30, None)  # Set offset
+viewlib.fix_borders(ax)
+viewlib.fix_borders(ax2, visibles=[False]*4)
+
+##
+
+fig, axs = viewlib.get_plot(n_ax=3, sharex=False)
+
+cmap="Blues"
+
+viewlib.histograms.two_dimensional_hex(axs[0], res_atoms, res_time, colormap=cmap)
+viewlib.histograms.two_dimensional_hex(axs[1], res_graph, res_time, colormap=cmap)
+viewlib.histograms.two_dimensional_hex(axs[2], res_conformers, res_time, colormap=cmap)
+
+axs[0].set_ylabel("computational time")
+axs[0].set_xlabel("No. Atoms per compound")
+axs[1].set_xlabel("No. Graphs per compound")
+axs[2].set_xlabel("No. Conformers per compound")
+
+viewlib.formats.set_axis_format(axs[0].yaxis, viewlib.formats.formatter_time)
+viewlib.fix_borders(axs[0])
+viewlib.fix_borders(axs[1], visibles=[False, False, True, False])
+viewlib.fix_borders(axs[2], visibles=[False, False, True, False])
+
+fig.tight_layout()
+
+### 

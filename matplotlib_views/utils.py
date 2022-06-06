@@ -143,6 +143,9 @@ def fix_borders(ax, visibles=[False, False, True, True], fix_bounds=True):
         spine = spines[direction]
         spine.set_visible(visible)
 
+        if not visible and direction == "left":
+            ax.yaxis.set_visible(False)
+
         if not visible:
             continue
 
