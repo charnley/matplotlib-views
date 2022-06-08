@@ -1,5 +1,6 @@
 from cycler import cycler
 from matplotlib import patheffects
+import matplotlib as mpl
 from matplotlib import pyplot as plt
 import matplotlib
 import numpy as np
@@ -7,14 +8,33 @@ import pandas as pd
 import re
 
 
-def get_plot(n_ax=1, sharey=True, sharex=True):
+def get_plot(n_ax=1, sharey=True, sharex=True, size=12):
     """ Get a jupyter-sized plot """
-    size=12
     fig, axs = plt.subplots(1, n_ax, sharey=sharey, sharex=sharex, figsize=(n_ax * size, size))
     return fig, axs
 
 
 def set_global_style(font_size=18):
+    """
+
+    font_size : 20 powerpoint presentation
+
+    """
+
+    font = {"weight": "bold", "size": font_size}
+
+    matplotlib.rc("font", **font)
+    matplotlib.rc("axes", labelweight="bold")
+
+    # Thicker spines
+    matplotlib.rcParams['axes.linewidth'] = 2
+    matplotlib.rcParams['xtick.major.width'] = 2
+    matplotlib.rcParams['ytick.major.width'] = 2
+
+    return
+
+
+def set_global_style_tex(font_size=15):
     """
 
     font_size : 20 powerpoint presentation
