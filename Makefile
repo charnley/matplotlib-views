@@ -4,6 +4,7 @@ pkg=ppqm
 
 env:
 	${mamba} env create -f ./environment.yml -p ./env
+	./env/bin/python -m pip setup.py install --editable
 
 setup-dev:
 	pre-commit install
