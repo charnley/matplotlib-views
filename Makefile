@@ -13,3 +13,6 @@ test:
 
 cov:
 	${python} -m pytest -vrs --cov=${pkg} --cov-report html tests
+
+start_jupyter:
+	export PYTHONPATH=$$PYTHONPATH:./ & jupyter-lab
