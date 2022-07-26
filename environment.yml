@@ -1,0 +1,17 @@
+name: ppqm
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - matplotlib
+  - numpy
+  - jupyterlab
+  - jupytext
+  - matplotlib
+  - numpy
+  - pandas
+  - pip
+  - pre-commit
+  - pytest
+  - pytest-cov
