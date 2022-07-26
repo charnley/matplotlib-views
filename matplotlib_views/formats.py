@@ -8,20 +8,22 @@ ax.xaxis.set_major_formatter(formatter_suffix)
 """
 
 import datetime
-from matplotlib.ticker import NullFormatter
+
 import matplotlib
+import numpy as np
 
 suffixes = {
-    1e-9: 'n',
-    1e-6: 'u',
-    1e-3: 'm',
-    1: '',
-    1e3: 'k',
-    1e6: 'M',
-    1e9: 'G',
-    1e12: 'T',
-    1e15: 'Y',
+    1e-9: "n",
+    1e-6: "u",
+    1e-3: "m",
+    1: "",
+    1e3: "k",
+    1e6: "M",
+    1e9: "G",
+    1e12: "T",
+    1e15: "Y",
 }
+
 
 def formatter_suffix(x, pos):
 
@@ -47,8 +49,8 @@ def formatter_time_float(seconds, pos):
 
     days = delta.days
     seconds = delta.seconds
-    hours = seconds//3600
-    minutes = (seconds//60)%60
+    hours = seconds // 3600
+    minutes = (seconds // 60) % 60
 
     if days > 0:
         return f"{days}d"
@@ -69,8 +71,8 @@ def formatter_time(seconds, pos):
 
     days = delta.days
     seconds = delta.seconds
-    hours = seconds//3600
-    minutes = (seconds//60)%60
+    hours = seconds // 3600
+    minutes = (seconds // 60) % 60
 
     if days > 0:
         return f"{days}d"
@@ -87,11 +89,14 @@ def formatter_time(seconds, pos):
 def formatter_int(x, pos):
     return "%i" % x
 
+
 def formatter_float(x, pos):
     return "%4.2f" % x
 
+
 def formatter_off(x, pos):
     return ""
+
 
 def formatter_notrail(x, pos):
     """
@@ -100,13 +105,11 @@ def formatter_notrail(x, pos):
 
     if x.is_integer():
         return formatter_int(x, pos)
-    else:
-        return '{0:g}'.format(x)
-
-    return
+    return "{0:g}".format(x)
 
 
 # usage
+
 
 def set_axis_format(axis, format_func):
     """

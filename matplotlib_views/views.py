@@ -1,23 +1,16 @@
 #!/usr/bin/env python
 
-import numpy as np
-import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from matplotlib import rc
-
-from scipy import stats
-from scipy.stats import halfnorm
+import numpy as np
+from matplotlib.ticker import NullFormatter
 from scipy.stats import gaussian_kde
-from scipy.stats import norm
 
+from matplotlib_views import fix_borders
 
 FONTNAME = "Fira Sans"
 FONTWEIGHT = "bold"
-DEFAULT_FONT = {
-    "fontweight": FONTWEIGHT,
-    "fontname": FONTNAME
-}
+DEFAULT_FONT = {"fontweight": FONTWEIGHT, "fontname": FONTNAME}
 
 
 COLOR_STANDARD = "#d81b6a"
@@ -31,7 +24,6 @@ COLOR_HIGHLIGHT = "#800031"
 # txt = plt.text(2,2,'This is a test', size=11, color='black')
 # txt.set_path_effects([PathEffects.withStroke(linewidth=5, foreground='w')])
 # plt.draw()
-
 
 
 def save(filename, fig=plt, clf=False):
@@ -88,37 +80,31 @@ def border(ax, visibles=[False, False, True, True], bounds=[None, None, None, No
     spines = get_spines(ax)
 
     for spine, visible, bound in zip(spines, visibles, bounds):
-            spine.set_visible(visible)
+        spine.set_visible(visible)
 
-            if bound is not None:
-                spine.set_bounds(min(bound), max(bound))
+        if bound is not None:
+            spine.set_bounds(min(bound), max(bound))
 
     return
 
 
 def set_font():
 
-    plt.rc('text', usetex=True)
-    plt.rc('font', family='serif')
-    plt.rc('font', size=18)
-    plt.rc('font', size=14)
+    plt.rc("text", usetex=True)
+    plt.rc("font", family="serif")
+    plt.rc("font", size=18)
+    plt.rc("font", size=14)
     fontname = "Fira Sans"
     fontweight = "bold"
-    plt.rc('legend', fontsize=15)
-    mpl.rcParams['font.sans-serif'] = fontname
-    mpl.rcParams['font.family'] = "sans-serif"
-    mpl.rcParams['font.weight'] = fontweight
+    plt.rc("legend", fontsize=15)
+    mpl.rcParams["font.sans-serif"] = fontname
+    mpl.rcParams["font.family"] = "sans-serif"
+    mpl.rcParams["font.weight"] = fontweight
 
     return
 
 
-def hexbin(ax,
-    xvalues,
-    yvalues,
-    density=25,
-    mincount=2,
-    colormap='PuRd',
-    bins='log'):
+def hexbin(ax, xvalues, yvalues, density=25, mincount=2, colormap="PuRd", bins="log"):
     """
 
     wrapper for hexbin with sane defaults
@@ -126,19 +112,19 @@ def hexbin(ax,
     """
 
     # Settings
-    lineswidth=0.0 # white lines
-    lineswidth=0.2 # perfect fit
-    lineswidth=0.3 # fit for pngs
-    lineswidth=0.4 # fit for pngs
+    lineswidth = 0.0  # white lines
+    lineswidth = 0.2  # perfect fit
+    lineswidth = 0.3  # fit for pngs
+    lineswidth = 0.4  # fit for pngs
 
     # colormap = 'Greys'
 
     hexbinpar = {
-        'gridsize': density,
-        'cmap': colormap,
-        'linewidths': lineswidth,
-        'mincnt': 1,
-        'bins': bins,
+        "gridsize": density,
+        "cmap": colormap,
+        "linewidths": lineswidth,
+        "mincnt": 1,
+        "bins": bins,
     }
 
     _ = ax.hexbin(xvalues, yvalues, **hexbinpar)
@@ -146,14 +132,10 @@ def hexbin(ax,
     return
 
 
+# ACTUAL VIEWS
 
-## ACTUAL VIEWS
 
-
-def histogram_1d(ax, xvalues,
-    use_kde=False,
-    include_points=False,
-    fix_border=True):
+def histogram_1d(ax, xvalues, use_kde=False, include_points=False, fix_border=True):
     """
 
 
@@ -177,15 +159,24 @@ def histogram_1d(ax, xvalues,
         values = gaussian_kernel(bins)
         ax.plot(bins, values, "k", linewidth=1.0)
 
-
         xticks = ax.get_xticks()
         yticks = ax.get_yticks()
 
-        border(ax,bounds=[None,None,(min(xticks[1:-1]), max(xticks[1:-1])), (min(yticks[1:-1]), max(yticks[1:-1]))])
+        border(
+            ax,
+            bounds=[
+                None,
+                None,
+                (min(xticks[1:-1]), max(xticks[1:-1])),
+                (min(yticks[1:-1]), max(yticks[1:-1])),
+            ],
+        )
 
     else:
 
-        n, bins, patches = ax.hist(xvalues, bins=20, histtype='stepfilled', color="k", density=False)
+        n, bins, patches = ax.hist(
+            xvalues, bins=20, histtype="stepfilled", color="k", density=False
+        )
 
     # xticks = ax.get_xticks()
     # yticks = ax.get_yticks()
@@ -204,16 +195,14 @@ def histogram_1d(ax, xvalues,
 
 
 def histogram_2d_with_kde(
-    xvalues, yvalues,
-    xlabel=None,
-    ylabel=None,
-    debug=False,
-    fontargs=DEFAULT_FONT):
-    """
-    """
+    xvalues, yvalues, xlabel=None, ylabel=None, debug=False, fontargs=DEFAULT_FONT
+):
+    """"""
 
-    color_std = "#d81b6a"
-    color_hl = "#800031"
+    filename = "test"
+
+    # color_std = "#d81b6a"
+    # color_hl = "#800031"
 
     # TODO Move font to somewhere else
     # plt.rc('text', usetex=True)
@@ -226,7 +215,6 @@ def histogram_2d_with_kde(
     # mpl.rcParams['font.sans-serif'] = fontname
     # mpl.rcParams['font.family'] = "sans-serif"
     # mpl.rcParams['font.weight'] = fontweight
-
 
     nullfmt = NullFormatter()
 
@@ -244,31 +232,30 @@ def histogram_2d_with_kde(
     ax_histx = plt.axes(rect_histx)
     ax_histy = plt.axes(rect_histy)
 
-
     # scatter plot
     # ax_scatter.scatter(xvalues, yvalues, color="k", alpha=0.4)
 
     # TODO move hexbin ax function somewhere else
     # Hack to make MPL hide the overlap of hexacons
-    lineswidth=0.0 # white lines
-    lineswidth=0.2 # perfect fit
-    lineswidth=0.3 # fit for pngs
-    lineswidth=0.4 # fit for pngs
+    lineswidth = 0.0  # white lines
+    lineswidth = 0.2  # perfect fit
+    lineswidth = 0.3  # fit for pngs
+    lineswidth = 0.4  # fit for pngs
 
-    colormap = 'Greys'
-    colormap = 'PuRd'
+    colormap = "Greys"
+    colormap = "PuRd"
 
     hex_density = 25
 
     hexbinpar = {
-        'gridsize': hex_density,
-        'cmap': colormap,
-        'linewidths': lineswidth,
-        'mincnt': 2,
-        'bins': 'log',
+        "gridsize": hex_density,
+        "cmap": colormap,
+        "linewidths": lineswidth,
+        "mincnt": 2,
+        "bins": "log",
     }
 
-    hb = ax_scatter.hexbin(xvalues, yvalues, **hexbinpar)
+    _ = ax_scatter.hexbin(xvalues, yvalues, **hexbinpar)
 
     # define binwidth
     x_max = np.max(xvalues)
@@ -276,35 +263,33 @@ def histogram_2d_with_kde(
     x_binwidth = (abs(x_min) + x_max) / 30.0
     x_binwidth = int(x_binwidth)
     x_binwidth = 1.0
-    x_bins = np.arange(x_min, x_max+x_binwidth, x_binwidth)
+    # x_bins = np.arange(x_min, x_max + x_binwidth, x_binwidth)
 
     y_max = np.max(yvalues)
     y_min = np.min(yvalues)
     y_binwidth = (abs(y_min) + y_max) / 50.0
     y_binwidth = int(y_binwidth)
-    y_bins = np.arange(y_min, y_max+y_binwidth, y_binwidth)
-
+    # y_bins = np.arange(y_min, y_max + y_binwidth, y_binwidth)
 
     # scatter keys
-    xkeys = np.arange(10, x_max+x_binwidth*2, 10)
+    xkeys = np.arange(10, x_max + x_binwidth * 2, 10)
     xkeys = [1] + list(xkeys)
-    ykeys = np.arange(0, y_max+y_binwidth, 100)
+    ykeys = np.arange(0, y_max + y_binwidth, 100)
 
     # filter ykeys
     n_keys = len(ykeys)
     if n_keys > 12:
-        ykeys = np.arange(0, y_max+y_binwidth, 150)
+        ykeys = np.arange(0, y_max + y_binwidth, 150)
 
     # Set limits and ticks of scatter
     # TODO More space to x-axis
     xkeys_min = min(xkeys)
     xkeys_max = max(xkeys)
-    diff = xkeys[2]-xkeys[1]
-    xlim = (xkeys_min-0.8*diff, xkeys_max+0.8*diff)
-    ylim = (0-y_binwidth*5, y_max+y_binwidth*2)
+    diff = xkeys[2] - xkeys[1]
+    xlim = (xkeys_min - 0.8 * diff, xkeys_max + 0.8 * diff)
+    ylim = (0 - y_binwidth * 5, y_max + y_binwidth * 2)
     ax_scatter.set_xlim(xlim)
     ax_scatter.set_ylim(ylim)
-
 
     # Histogram
 
@@ -319,9 +304,9 @@ def histogram_2d_with_kde(
         values = gaussian_kernel(bins)
         ax_histy.plot(values, bins, "k", linewidth=1.0)
 
-    else:
-        ax_histx.hist(xvalues, bins=x_bins, histtype='step', color="k")
-        ax_histy.hist(yvalues, bins=y_bins, orientation='horizontal', histtype='step', color="k")
+    # else:
+    #     ax_histx.hist(xvalues, bins=x_bins, histtype="step", color="k")
+    #     ax_histy.hist(yvalues, bins=y_bins, orientation="horizontal", histtype="step", color="k")
 
     ax_histx.set_xlim(ax_scatter.get_xlim())
     ax_histy.set_ylim(ax_scatter.get_ylim())
@@ -331,13 +316,12 @@ def histogram_2d_with_kde(
         ax_histx.xaxis.set_major_formatter(nullfmt)
         ax_histy.yaxis.set_major_formatter(nullfmt)
 
-        set_border(ax_scatter, xkeys, ykeys)
-        set_border(ax_histx, [], [], border=[False, False, False, False])
-        set_border(ax_histy, [], [], border=[False, False, False, False])
+        fix_borders(ax_scatter, xkeys, ykeys)
+        fix_borders(ax_histx, [], [], border=[False, False, False, False])
+        fix_borders(ax_histy, [], [], border=[False, False, False, False])
 
         ax_histx.set_xticks([], [])
         ax_histy.set_yticks([], [])
-
 
     ax_scatter.set_xlabel(xlabel, **fontargs)
     ax_scatter.set_ylabel(ylabel, **fontargs)
@@ -346,5 +330,3 @@ def histogram_2d_with_kde(
     plt.savefig(filename + ".pdf", bbox_inches="tight")
 
     plt.clf()
-
-    return

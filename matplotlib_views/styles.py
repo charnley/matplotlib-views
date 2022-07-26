@@ -1,17 +1,13 @@
-
-from cycler import cycler
 import string
 
-from matplotlib import rcParams, rcParamsDefault, get_backend, rcParamsOrig
-from matplotlib import patheffects, ticker
-
-from matplotlib_views import utils, formats
-
 import numpy as np
+from cycler import cycler
+from matplotlib import patheffects, rcParams, ticker
 
+from matplotlib_views import formats, utils
 
 outline = dict(
-    path_effects = [patheffects.withStroke(linewidth=4, foreground="w")],
+    path_effects=[patheffects.withStroke(linewidth=4, foreground="w")],
 )
 
 
@@ -37,41 +33,47 @@ class teach:
 
         self._orig = rcParams.copy()
 
-        if rcParams['text.usetex']:
+        if rcParams["text.usetex"]:
             raise RuntimeError("xkcd mode is not compatible with text.usetex = True")
 
         # Color blind colors
         colors = dict(
-            b = utils.hex2color('#377eb8'),
-            g = utils.hex2color('#4daf4a'),
-            p = utils.hex2color('#984ea3'),
-            r = utils.hex2color('#e41a1c'),
-            y = utils.hex2color('#ff7f00'),
+            b=utils.hex2color("#377eb8"),
+            g=utils.hex2color("#4daf4a"),
+            p=utils.hex2color("#984ea3"),
+            r=utils.hex2color("#e41a1c"),
+            y=utils.hex2color("#ff7f00"),
         )
 
-        rcParams.update({
-            'font.family': ['xkcd', 'xkcd Script', 'Humor Sans', 'Comic Neue', 'Comic Sans MS'],
-            'font.size': font_size,
-            'path.sketch': (scale, length, randomness),
-            'path.effects': [],
-            'axes.linewidth': 1.5,
-            'lines.linewidth': 2.0,
-            'figure.facecolor': 'white',
-            'grid.linewidth': 0.0,
-            'axes.grid': False,
-            'axes.unicode_minus': False,
-            'axes.edgecolor': 'black',
-            'xtick.major.size': 8,
-            'xtick.major.width': 3,
-            'ytick.major.size': 8,
-            'ytick.major.width': 3,
-
-            # scatter plot defaults
-            'lines.markersize': 10,
-
-            # Colors
-            'axes.prop_cycle': cycler(color=colors.values())
-        })
+        rcParams.update(
+            {
+                "font.family": [
+                    "xkcd",
+                    "xkcd Script",
+                    "Humor Sans",
+                    "Comic Neue",
+                    "Comic Sans MS",
+                ],
+                "font.size": font_size,
+                "path.sketch": (scale, length, randomness),
+                "path.effects": [],
+                "axes.linewidth": 1.5,
+                "lines.linewidth": 2.0,
+                "figure.facecolor": "white",
+                "grid.linewidth": 0.0,
+                "axes.grid": False,
+                "axes.unicode_minus": False,
+                "axes.edgecolor": "black",
+                "xtick.major.size": 8,
+                "xtick.major.width": 3,
+                "ytick.major.size": 8,
+                "ytick.major.width": 3,
+                # scatter plot defaults
+                "lines.markersize": 10,
+                # Colors
+                "axes.prop_cycle": cycler(color=colors.values()),
+            }
+        )
 
     def __enter__(self):
         return self
@@ -82,9 +84,11 @@ class teach:
 
 def use_teach(func, *args, **kwargs):
     """ Decorator to use teach style on plot functions """
+
     def wrapper(*args, **kwargs):
         with teach():
             return func(*args, **kwargs)
+
     return wrapper
 
 
@@ -96,6 +100,7 @@ def simple_axes(axs):
         ax.xaxis.set_major_formatter(ticker.FuncFormatter(formats.formatter_off))
 
     return
+
 
 def simple_ticks(axis):
     mi = min(axis)
@@ -115,10 +120,15 @@ def name_axes(axs, loc=None):
     if loc and "bottom" in loc:
         y = 0.1
 
-
     alphabet = string.ascii_lowercase
 
     for i, ax in enumerate(axs):
         char = alphabet[i].upper()
-        ax.text(x, y, f'{char})', horizontalalignment='center', verticalalignment='center', transform=ax.transAxes)
-
+        ax.text(
+            x,
+            y,
+            f"{char})",
+            horizontalalignment="center",
+            verticalalignment="center",
+            transform=ax.transAxes,
+        )

@@ -1,17 +1,5 @@
-
-from matplotlib_views import utils
-
-
-
-def two_dimensional_hex(
-    ax,
-    xvalues,
-    yvalues,
-    density=25, mincount=2, 
-        colormap="PuRd", bins="log"
-
-):
-    """ Wrapper for MPL hexbin func with sane defaults 
+def two_dimensional_hex(ax, xvalues, yvalues, density=25, mincount=2, colormap="PuRd", bins="log"):
+    """Wrapper for MPL hexbin func with sane defaults
 
 
     add colorbar:
@@ -34,4 +22,3 @@ def two_dimensional_hex(
 
     im = ax.hexbin(xvalues, yvalues, **hexbinpar)
     return im
-

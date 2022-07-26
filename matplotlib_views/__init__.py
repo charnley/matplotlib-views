@@ -1,6 +1,3 @@
-
-from .utils import get_plot, fix_borders, set_global_style, get_tick_limits
-from .views import save, border
-from . import histograms
-from . import formats
-
+from . import formats, histograms
+from .utils import fix_borders, get_plot, get_tick_limits, set_global_style
+from .views import border, save
