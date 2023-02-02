@@ -132,11 +132,7 @@ def hexbin(ax, xvalues, yvalues, density=25, mincount=2, colormap="PuRd", bins="
     return
 
 
-<<<<<<< HEAD
-# ACTUAL VIEWS
-=======
 ## ACTUAL VIEWS
->>>>>>> context and formatting
 
 
 def histogram_1d(ax, xvalues, use_kde=False, include_points=False, fix_border=True):
@@ -201,13 +197,6 @@ def histogram_1d(ax, xvalues, use_kde=False, include_points=False, fix_border=Tr
 def histogram_2d_with_kde(
     xvalues, yvalues, xlabel=None, ylabel=None, debug=False, fontargs=DEFAULT_FONT
 ):
-<<<<<<< HEAD
-    """"""
-
-    filename = "test"
-=======
-    """ """
->>>>>>> context and formatting
 
     # color_std = "#d81b6a"
     # color_hl = "#800031"
@@ -271,21 +260,13 @@ def histogram_2d_with_kde(
     x_binwidth = (abs(x_min) + x_max) / 30.0
     x_binwidth = int(x_binwidth)
     x_binwidth = 1.0
-<<<<<<< HEAD
     # x_bins = np.arange(x_min, x_max + x_binwidth, x_binwidth)
-=======
-    x_bins = np.arange(x_min, x_max + x_binwidth, x_binwidth)
->>>>>>> context and formatting
 
     y_max = np.max(yvalues)
     y_min = np.min(yvalues)
     y_binwidth = (abs(y_min) + y_max) / 50.0
     y_binwidth = int(y_binwidth)
-<<<<<<< HEAD
     # y_bins = np.arange(y_min, y_max + y_binwidth, y_binwidth)
-=======
-    y_bins = np.arange(y_min, y_max + y_binwidth, y_binwidth)
->>>>>>> context and formatting
 
     # scatter keys
     xkeys = np.arange(10, x_max + x_binwidth * 2, 10)
@@ -320,15 +301,9 @@ def histogram_2d_with_kde(
         values = gaussian_kernel(bins)
         ax_histy.plot(values, bins, "k", linewidth=1.0)
 
-<<<<<<< HEAD
     # else:
     #     ax_histx.hist(xvalues, bins=x_bins, histtype="step", color="k")
     #     ax_histy.hist(yvalues, bins=y_bins, orientation="horizontal", histtype="step", color="k")
-=======
-    else:
-        ax_histx.hist(xvalues, bins=x_bins, histtype="step", color="k")
-        ax_histy.hist(yvalues, bins=y_bins, orientation="horizontal", histtype="step", color="k")
->>>>>>> context and formatting
 
     ax_histx.set_xlim(ax_scatter.get_xlim())
     ax_histy.set_ylim(ax_scatter.get_ylim())

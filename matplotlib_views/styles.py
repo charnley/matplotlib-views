@@ -20,9 +20,9 @@ default_effects = [patheffects.withStroke(linewidth=4, foreground="w")]
 
 outline = dict(path_effects=default_effects)
 
-from matplotlib_views import formats, utils
-
 from matplotlib.colors import get_named_colors_mapping
+
+from matplotlib_views import formats, utils
 
 
 class outline:
@@ -195,7 +195,7 @@ class teach:
 
 
 def use_teach(func, *args, **kwargs):
-    """ Decorator to use teach style on plot functions """
+    """Decorator to use teach style on plot functions"""
 
     def wrapper(*args, **kwargs):
         with teach():
