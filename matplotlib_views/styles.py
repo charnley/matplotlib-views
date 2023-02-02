@@ -6,14 +6,126 @@ from matplotlib import patheffects, rcParams, ticker
 
 from matplotlib_views import formats, utils
 
-outline = dict(
-    path_effects=[patheffects.withStroke(linewidth=4, foreground="w")],
-)
+# matplotlib.font_manager._rebuild()
+# shutil.rmtree(matplotlib.get_cachedir())
+# Path(matplotlib.get_cachedir()).rmdir()
+
+# import matplotlib.font_manager as font_manager
+# # Add every font at the specified location
+# font_dir = ['/Users/darioradecic/Downloads/Merriweather']
+# for font in font_manager.findSystemFonts(font_dir):
+#     font_manager.fontManager.addfont(font)
+
+default_effects = [patheffects.withStroke(linewidth=4, foreground="w")]
+
+outline = dict(path_effects=default_effects)
+
+from matplotlib_views import formats, utils
+
+from matplotlib.colors import get_named_colors_mapping
+
+
+class outline:
+    def __init__(
+        self,
+    ):
+
+        self._orig = rcParams.copy()
+
+        rcParams.update(
+            {
+                "path.effects": [patheffects.withStroke(linewidth=5, foreground="w")],
+                "lines.linewidth": 3.0,
+                # scatter plot defaults
+                "lines.markersize": 10,
+            }
+        )
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        dict.update(rcParams, self._orig)
 
 
 class ppt:
+    def __init__(
+        self,
+        font="Arial Black",
+        font_size=20,
+        colors=None,
+    ):
+        # valid rc parameter (see rcParams.keys() for a list of valid parameters
 
-    pass
+        # TODO Assert that the font exist
+
+        self._orig = rcParams.copy()
+        self._colors = get_named_colors_mapping().copy()
+
+        # Color blind colors
+        if colors is None:
+            colors = dict()
+
+        colors = {
+            **dict(
+                b="#377eb8",
+                g="#4daf4a",
+                p="#984ea3",
+                r="#e41a1c",
+                y="#ff7f00",
+            ),
+            **colors,
+        }
+
+        # Translate hex
+        colors = {key: utils.hex2color(colors[key]) for key in colors.keys()}
+
+        # TODO Set default colors. This does not work for plot(x, y, 'bo')
+        get_named_colors_mapping().update(colors)
+
+        rcParams.update(
+            {
+                "font.family": [font],
+                "font.size": font_size,
+                "path.effects": [],
+                "axes.linewidth": 3,
+                "lines.linewidth": 3.0,
+                "figure.facecolor": "white",
+                "grid.linewidth": 0.0,
+                "axes.grid": False,
+                "axes.unicode_minus": False,
+                "axes.edgecolor": "black",
+                "xtick.major.size": 6,
+                "xtick.major.width": 3,
+                "ytick.major.size": 5,
+                "ytick.major.width": 3,
+                # scatter plot defaults
+                "lines.markersize": 10,
+                # Colors
+                "axes.prop_cycle": cycler(color=colors.values()),
+                # Legend
+                "legend.loc": "best",
+                "legend.frameon": False,  # if True, draw the legend on a background patch
+                "legend.framealpha": 0.0,  # legend patch transparency
+                "legend.facecolor": "inherit",  # inherit from axes.facecolor; or color spec
+                # 'legend.edgecolor':     0.8,      # background patch boundary color
+                "legend.fancybox": False,  # if True, use a rounded box for the
+                "legend.shadow": False,  # if True, give background a shadow effect
+                "legend.numpoints": 1,  # the number of marker points in the legend line
+                "legend.scatterpoints": 1,  # number of scatter points
+                "legend.markerscale": 1.5,  # the relative size of legend markers vs. original
+                "legend.fontsize": "medium",
+                "legend.labelcolor": None,
+                "legend.title_fontsize": None,  # None sets to the same as the default axes.
+            }
+        )
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        dict.update(rcParams, self._orig)
+        dict.update(get_named_colors_mapping(), self._colors)
 
 
 class teach:

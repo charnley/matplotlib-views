@@ -43,7 +43,7 @@ def formatter_suffix(x, pos):
 
 
 def formatter_time_float(seconds, pos):
-    """ Automatically format time in seconds to nearest sec, mins, hours, days, years """
+    """Automatically format time in seconds to nearest sec, mins, hours, days, years"""
 
     delta = datetime.timedelta(seconds=seconds)
 
@@ -65,7 +65,7 @@ def formatter_time_float(seconds, pos):
 
 
 def formatter_time(seconds, pos):
-    """ Automatically format time in seconds to nearest sec, mins, hours, days, years """
+    """Automatically format time in seconds to nearest sec, mins, hours, days, years"""
 
     delta = datetime.timedelta(seconds=seconds)
 

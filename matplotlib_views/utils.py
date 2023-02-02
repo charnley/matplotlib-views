@@ -1,4 +1,5 @@
 import re
+import shutil
 
 import matplotlib
 import matplotlib as mpl
@@ -7,8 +8,23 @@ from matplotlib import patheffects
 from matplotlib import pyplot as plt
 
 
+def clear_cache():
+    # Path(matplotlib.get_cachedir()).rmdir()
+    shutil.rmtree(matplotlib.get_cachedir())
+
+
+PATHARGS = dict(path_effects=[patheffects.withStroke(foreground="w", linewidth=4)])
+
+# Example
+# textargs = dict(
+#     transform=ax.transAxes,
+#     ha="center", va="center",
+# )
+# ax.text(0.5, 0.5, "TEXT", **textargs, **pathargs)
+
+
 def get_plot(n_ax=1, sharey=True, sharex=True, size=12):
-    """ Get a jupyter-sized plot """
+    """Get a jupyter-sized plot"""
     fig, axs = plt.subplots(1, n_ax, sharey=sharey, sharex=sharex, figsize=(n_ax * size, size))
     return fig, axs
 
@@ -130,7 +146,9 @@ def get_tick_limits(ax):
 
 
 def fix_borders(ax, visibles=[False, False, True, True], fix_bounds=True):
-    """ Make border pretty """
+    """Make border pretty"""
+
+    # TODO What if xticks are not numeric? like categories
 
     directions = ["top", "right", "bottom", "left"]
 

@@ -13,7 +13,7 @@ def learning_curve_error(
     loglog=True,
     show_legend=True,
 ):
-    """"""
+    """ """
 
     if loglog:
         ax.set_xscale("log")
