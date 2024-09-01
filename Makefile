@@ -15,5 +15,5 @@ test:
 cov:
 	${python} -m pytest -vrs --cov=${pkg} --cov-report html tests
 
-start_jupyter:
-	export PYTHONPATH=$$PYTHONPATH:./ & jupyter-lab
+start-jupyter:
+	PYTHONPATH=$$PYTHONPATH:`pwd`/src ${python} -m jupyterlab --no-browser --ip $$(hostname -I | awk '{print $$1}') --port 8888
