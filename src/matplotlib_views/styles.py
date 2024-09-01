@@ -3,6 +3,7 @@ import string
 import numpy as np
 from cycler import cycler
 from matplotlib import patheffects, rcParams, ticker
+from matplotlib.colors import get_named_colors_mapping
 
 from matplotlib_views import formats, utils
 
@@ -19,10 +20,6 @@ from matplotlib_views import formats, utils
 default_effects = [patheffects.withStroke(linewidth=4, foreground="w")]
 
 outline = dict(path_effects=default_effects)
-
-from matplotlib.colors import get_named_colors_mapping
-
-from matplotlib_views import formats, utils
 
 
 class outline:
