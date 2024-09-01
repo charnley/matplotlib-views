@@ -20,6 +20,7 @@ repos:
       - id: check-added-large-files
         args: ['--maxkb=3000']
 
+
   - repo: https://github.com/myint/autoflake
     rev: v1.4
     hooks:
@@ -46,7 +47,7 @@ repos:
         ]
 
   - repo: https://github.com/psf/black
-    rev: 22.8.0
+    rev: 22.3.0
     hooks:
       - id: black
         name: Fixes formatting
@@ -54,7 +55,7 @@ repos:
         args: ["--line-length=99"]
 
 
-  - repo: https://gitlab.com/pycqa/flake8
+  - repo: https://github.com/pycqa/flake8
     rev: 4.0.1
     hooks:
       - id: flake8
@@ -74,6 +75,15 @@ repos:
   #   hooks:
   #   - id: mypy
   #     args: [--ignore-missing-imports]
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: Checking types
+        entry: mypy
+        language: system
+        types: [ python ]
+
 
   - repo: local
     hooks:
@@ -108,5 +118,6 @@ repos:
             "--log-level=ERROR",
             "--inplace",
           ]
+
         files: \.ipynb$
         language: python
