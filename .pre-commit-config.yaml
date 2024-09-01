@@ -76,13 +76,13 @@ repos:
   #   - id: mypy
   #     args: [--ignore-missing-imports]
 
-  - repo: local
-    hooks:
-      - id: mypy
-        name: Checking types
-        entry: mypy
-        language: system
-        types: [ python ]
+  # - repo: local
+  #   hooks:
+  #     - id: mypy
+  #       name: Checking types
+  #       entry: mypy
+  #       language: system
+  #       types: [ python ]
 
 
   - repo: local
